@@ -18,7 +18,7 @@ export const AnimatedSection = () => {
 
   return (
     <div className=" w-full h-screen  flex flex-col items-center justify-center ">
-      {/* <div className="relative z-10 max-w-4xl"> */}
+  
         
         <div className=" w-full flex-items-center gap-3 flex pl-20">
                   <h3 className="text-4xl">Renegent is</h3>
@@ -67,7 +67,7 @@ export const AnimatedSection = () => {
 </span>
  
 </div>
-          </div>
+ </div>
 
       
    

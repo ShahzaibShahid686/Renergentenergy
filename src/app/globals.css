@@ -1,6 +1,5 @@
 @import "tailwindcss";
-/* @tailwind base;
-@tailwind components; */
+
 @tailwind utilities;
 
 :root {
@@ -42,4 +41,33 @@ body {
 
 .animate-scroll {
   animation: scroll 25s linear infinite;
+}
+.group-hover\:underline:hover h3 {
+  text-decoration: underline;
+}
+/* Add to existing CSS */
+.prose img {
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #1e2a52;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
 }

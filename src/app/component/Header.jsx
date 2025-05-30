@@ -5,6 +5,7 @@ import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { RxDropdownMenu } from "react-icons/rx";
 import { usePathname } from "next/navigation";
+import ContactUsPopup from "./ContactUsPop"; // ✅ Add this line
 
 export function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -13,6 +14,7 @@ export function Header() {
   const [hasMounted, setHasMounted] = useState(false);
   const pathname = usePathname();
   const dropdownRef = useRef(null);
+  const contactRef = useRef(); // ✅ popup modal control
 
   useEffect(() => {
     setHasMounted(true);
@@ -36,7 +38,9 @@ export function Header() {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        showWhite ? "bg-white text-black shadow-md" : "bg-transparent text-white"
+        showWhite
+          ? "bg-white text-black shadow-md"
+          : "bg-transparent text-white"
       }`}
     >
       <div className="flex relative justify-between items-center px-6 py-4 max-w-screen-xl mx-auto">
@@ -63,28 +67,28 @@ export function Header() {
 
         <nav className="hidden md:flex items-center">
           <ul className="flex gap-8 items-center font-bold relative">
-            <li>
-              <Link
-                href="/"
-                className={`transition hover:text-[#97BF7A] ${
-                  pathname === "/" ? "text-[#97BF7A]" : showWhite ? "text-black" : "text-white"
-                }`}
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about"
-                className={`transition hover:text-[#97BF7A] ${
-                  pathname === "/about" ? "text-[#97BF7A]" : showWhite ? "text-black" : "text-white"
-                }`}
-              >
-                About
-              </Link>
-            </li>
+            {[
+              { name: "Home", href: "/" },
+              { name: "About", href: "/about" },
+              { name: "Projects", href: "/projects" },
+              { name: "Renergent’s Blogs", href: "/blogs" },
+            ].map((item) => (
+              <li key={item.name}>
+                <Link
+                  href={item.href}
+                  className={`transition hover:text-[#97BF7A] ${
+                    pathname === item.href
+                      ? "text-[#97BF7A]"
+                      : showWhite
+                        ? "text-black"
+                        : "text-white"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
 
-            
             <li className="relative" ref={dropdownRef}>
               <span
                 onClick={() => setShowDropdown((prev) => !prev)}
@@ -92,8 +96,8 @@ export function Header() {
                   pathname.startsWith("/solutions") || showDropdown
                     ? "text-[#97BF7A]"
                     : showWhite
-                    ? "text-black"
-                    : "text-white"
+                      ? "text-black"
+                      : "text-white"
                 }`}
               >
                 Solutions
@@ -125,34 +129,15 @@ export function Header() {
                 </div>
               )}
             </li>
-
-            <li>
-              <Link
-                href="/projects"
-                className={`transition hover:text-[#97BF7A] ${
-                  pathname === "/projects" ? "text-[#97BF7A]" : showWhite ? "text-black" : "text-white"
-                }`}
-              >
-                Projects
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/blogs"
-                className={`transition hover:text-[#97BF7A] ${
-                  pathname === "/blogs" ? "text-[#97BF7A]" : showWhite ? "text-black" : "text-white"
-                }`}
-              >
-                Renergent’s Blogs
-              </Link>
-            </li>
           </ul>
 
-          <Link href="/contact">
-            <button className="ml-8 px-5 py-2 bg-lime-400 text-black font-bold rounded-lg hover:bg-white hover:scale-105 transition">
-              Contact Us
-            </button>
-          </Link>
+          {/* ✅ Contact Us button opens modal */}
+          <button
+            onClick={() => contactRef.current?.open()}
+            className="ml-8 px-5 py-2 bg-lime-400 text-black font-bold rounded-lg hover:bg-white hover:scale-105 transition"
+          >
+            Contact Us
+          </button>
         </nav>
 
         <button
@@ -163,21 +148,23 @@ export function Header() {
         </button>
       </div>
 
-      
+      {/* ✅ Mobile Menu */}
       {mobileMenuOpen && (
         <div className="block md:hidden px-6 pb-6 text-black bg-white">
           <ul className="space-y-4 font-bold">
-            {["Home", "About", "Projects", "Renergent’s Blogs"].map((item, idx) => (
-              <li key={idx}>
-                <Link
-                  href={`/${item === "Home" ? "" : item.toLowerCase().replace(/’|\s/g, "")}`}
-                  className="hover:text-[#97BF7A]"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
+            {["Home", "About", "Projects", "Renergent’s Blogs"].map(
+              (item, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={`/${item === "Home" ? "" : item.toLowerCase().replace(/’|\s/g, "")}`}
+                    className="hover:text-[#97BF7A]"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item}
+                  </Link>
+                </li>
+              )
+            )}
             <li>
               <details className="group">
                 <summary className="cursor-pointer flex justify-between items-center">
@@ -190,7 +177,11 @@ export function Header() {
                     "Agricultural Solar Solutions",
                     "Residential Solar Solutions",
                   ].map((type, idx) => (
-                    <a key={idx} href="#" className="block hover:text-[#97BF7A]">
+                    <a
+                      key={idx}
+                      href="#"
+                      className="block hover:text-[#97BF7A]"
+                    >
                       {type}
                     </a>
                   ))}
@@ -198,15 +189,23 @@ export function Header() {
               </details>
             </li>
             <li>
-              <Link href="/contact">
-                <button className="w-full bg-lime-400 text-black py-2 rounded-lg font-bold mt-2 hover:bg-white transition">
-                  Contact Us
-                </button>
-              </Link>
+              {/* ✅ Mobile contact button triggers modal */}
+              <button
+                className="w-full bg-lime-400 text-black py-2 rounded-lg font-bold mt-2 hover:bg-white transition"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  contactRef.current?.open();
+                }}
+              >
+                Contact Us
+              </button>
             </li>
           </ul>
         </div>
       )}
+
+      {/* ✅ Include Modal */}
+      <ContactUsPopup ref={contactRef} />
     </header>
   );
 }

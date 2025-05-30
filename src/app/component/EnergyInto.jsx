@@ -16,9 +16,7 @@ export const EnergyIntro = () => {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
        
         <div>
-          {/* <h2 className="text-4xl font-bold text-[#1e2a52] mb-4 ">
-            Your Ultimate Partner in Empowering Energy independence
-          </h2> */}
+         
           <h3 className="text-2xl text-[#1e2a52] font-semibold mb-2">Truly green energy</h3>
           <p className="text-gray-600 mb-6">
             Renergent is committed to making the world cleaner and healthier.

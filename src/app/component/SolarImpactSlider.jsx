@@ -31,14 +31,13 @@ const solutions = [
 export const SolarImpactSlider = () => {
   return (
     <section className="w-full py-16 px-4 sm:px-6 bg-white text-center">
-      {/* Heading */}
+      
       <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1e2a52] mb-3">
         We offer solutions for greening up energy use and<br className="hidden sm:block" />
         improving your environmental credentials
       </h2>
 
-      {/* Swiper Slider */}
-      <div className="mt-10 max-w-6xl mx-auto">
+            <div className="mt-10 max-w-6xl mx-auto">
         <Swiper
           modules={[Pagination, Autoplay]}
           spaceBetween={20}
