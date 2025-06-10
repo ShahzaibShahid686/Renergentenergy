@@ -1,7 +1,6 @@
-// /src/lib/imageUrlBuilder.js
 
 import imageUrlBuilder from '@sanity/image-url';
-import { client } from './sanity'; // adjust path if needed
+import { client } from './sanity'; 
 
 const builder = imageUrlBuilder(client);
 

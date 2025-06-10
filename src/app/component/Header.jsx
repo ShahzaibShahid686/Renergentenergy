@@ -5,20 +5,19 @@ import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { RxDropdownMenu } from "react-icons/rx";
 import { usePathname } from "next/navigation";
-import ContactUsPopup from "./ContactUsPop"; // ✅ Add this line
-
-export function Header() {
+import ContactUsPopup from "./ContactUsPopup";
+const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [hasMounted, setHasMounted] = useState(false);
   const pathname = usePathname();
   const dropdownRef = useRef(null);
-  const contactRef = useRef(); // ✅ popup modal control
+  const contactRef = useRef();
 
   useEffect(() => {
-    setHasMounted(true);
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -33,14 +32,12 @@ export function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const showWhite = hasMounted && (scrollY > 50 || showDropdown);
+  const showWhite = scrollY > 50 || showDropdown;
 
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        showWhite
-          ? "bg-white text-black shadow-md"
-          : "bg-transparent text-white"
+        showWhite ? "bg-white text-black shadow-md" : "bg-transparent text-white"
       }`}
     >
       <div className="flex relative justify-between items-center px-6 py-4 max-w-screen-xl mx-auto">
@@ -64,7 +61,6 @@ export function Header() {
             }`}
           />
         </Link>
-
         <nav className="hidden md:flex items-center">
           <ul className="flex gap-8 items-center font-bold relative">
             {[
@@ -80,8 +76,8 @@ export function Header() {
                     pathname === item.href
                       ? "text-[#97BF7A]"
                       : showWhite
-                        ? "text-black"
-                        : "text-white"
+                      ? "text-black"
+                      : "text-white"
                   }`}
                 >
                   {item.name}
@@ -96,8 +92,8 @@ export function Header() {
                   pathname.startsWith("/solutions") || showDropdown
                     ? "text-[#97BF7A]"
                     : showWhite
-                      ? "text-black"
-                      : "text-white"
+                    ? "text-black"
+                    : "text-white"
                 }`}
               >
                 Solutions
@@ -131,7 +127,6 @@ export function Header() {
             </li>
           </ul>
 
-          {/* ✅ Contact Us button opens modal */}
           <button
             onClick={() => contactRef.current?.open()}
             className="ml-8 px-5 py-2 bg-lime-400 text-black font-bold rounded-lg hover:bg-white hover:scale-105 transition"
@@ -148,7 +143,6 @@ export function Header() {
         </button>
       </div>
 
-      {/* ✅ Mobile Menu */}
       {mobileMenuOpen && (
         <div className="block md:hidden px-6 pb-6 text-black bg-white">
           <ul className="space-y-4 font-bold">
@@ -189,7 +183,6 @@ export function Header() {
               </details>
             </li>
             <li>
-              {/* ✅ Mobile contact button triggers modal */}
               <button
                 className="w-full bg-lime-400 text-black py-2 rounded-lg font-bold mt-2 hover:bg-white transition"
                 onClick={() => {
@@ -204,8 +197,9 @@ export function Header() {
         </div>
       )}
 
-      {/* ✅ Include Modal */}
       <ContactUsPopup ref={contactRef} />
     </header>
   );
-}
+};
+
+export default Header;

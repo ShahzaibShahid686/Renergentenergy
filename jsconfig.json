@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"]
+      "@sanity/config": ["./sanity/studio/sanity.config"]
     }
   }
 }

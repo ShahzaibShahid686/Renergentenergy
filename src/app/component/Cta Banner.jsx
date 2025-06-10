@@ -6,7 +6,6 @@ import { ContactFormModal } from './ContactFormModal';
 
 export const CtaBanner = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-
   return (
     <>
       <section className="bg-[#f9fbf8] py-20 px-4 text-center">
@@ -24,9 +23,7 @@ export const CtaBanner = () => {
         >
           Get in Touch <IoIosArrowForward className="ml-2 text-xl" />
         </button>
-      </section>
-
-      
+      </section>    
       <ContactFormModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
     
     </>
